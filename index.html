@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>KAWN DUNE Flipbook</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="turn.min.js"></script>
+  <style>
+    body {
+      background: #111;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    #flipbook {
+      width: 90vw;
+      height: 90vh;
+    }
+    .page {
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    .page img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    @media (max-width: 768px) {
+      #flipbook {
+        width: 95vw !important;
+        height: 90vh !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="flipbook">
+    <div class="page"><img src="page_1.png"></div>
+    <div class="page"><img src="page_2.png"></div>
+    <div class="page"><img src="page_3.png"></div>
+    <div class="page"><img src="page_4.png"></div>
+    <div class="page"><img src="page_5.png"></div>
+  </div>
+  <script>
+    const book = $('#flipbook').turn({
+      width: window.innerWidth > 768 ? 800 : 400,
+      height: 500,
+      autoCenter: true,
+      duration: 1500,
+      display: window.innerWidth > 768 ? 'double' : 'single'
+    });
+
+    $('#flipbook .page').on('click', function(e) {
+      const pageWidth = $(this).width();
+      const clickX = e.offsetX;
+
+      if (clickX > pageWidth / 2) {
+        book.turn('next');
+      } else {
+        book.turn('previous');
+      }
+    });
+  </script>
+</body>
+</html>
